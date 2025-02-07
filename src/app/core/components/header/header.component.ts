@@ -14,7 +14,6 @@ export class HeaderComponent {
   onLogOut() {
     this.auth.logout();
     this.router.navigateByUrl("/");
-throw new Error('Method not implemented.');
 }
 
 }

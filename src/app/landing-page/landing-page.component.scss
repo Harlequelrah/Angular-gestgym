@@ -1,17 +1,29 @@
 .container {
     display: flex;
+    // flex-direction: column;
     justify-content: center;
     align-items: center;
-    // min-height: 100vh;
 
     img {
-        // width: 80%;
-        height: 100%;
+        width: 60%;
+        height: auto;
     }
 
-        .welcome-container {
-            width: 20%;
+    .welcome-container {
+
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        margin: 10px 0;
+        background: transparent;
+        width: 40%;
+
+        img {
+            width: 50%;
+            margin-bottom: 10px;
         }
+
+    }
 
 
 
