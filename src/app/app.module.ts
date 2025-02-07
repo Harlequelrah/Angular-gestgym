@@ -18,8 +18,8 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
   ],
   imports: [
     BrowserModule,
-    CoreModule,
     AppRoutingModule,
+    CoreModule,
     LoginPageComponent,
     LandingPageComponent,
     RouterOutlet

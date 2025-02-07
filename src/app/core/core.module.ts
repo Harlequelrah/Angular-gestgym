@@ -5,6 +5,8 @@ import { NotAuthorizedComponent } from './components/not-authorized/not-authoriz
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { CoreRoutingModule } from './core-routing.module';
 import { httpInterceptorsProviders } from './interceptors';
+import { HeaderComponent } from './components/header/header.component';
+import { RouterLink } from '@angular/router';
 
 
 
@@ -12,17 +14,20 @@ import { httpInterceptorsProviders } from './interceptors';
   declarations: [
     FooterComponent,
     NotFoundComponent,
-    NotAuthorizedComponent
+    NotAuthorizedComponent,
+    HeaderComponent
   ],
   imports: [
     CommonModule,
-    CoreRoutingModule
+    CoreRoutingModule,
+    RouterLink
   ],
   exports: [
     CoreRoutingModule,
     FooterComponent,
     NotFoundComponent,
-    NotAuthorizedComponent
+    NotAuthorizedComponent,
+    HeaderComponent
   ],
   providers: [
     ...httpInterceptorsProviders,

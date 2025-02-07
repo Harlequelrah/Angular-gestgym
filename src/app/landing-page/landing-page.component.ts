@@ -6,14 +6,13 @@ import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports:[AsyncPipe],
+  imports:[],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss'
 })
 export class LandingPageComponent implements OnInit{
 
-  constructor(private auth:AuthService){}
-  
+
   ngOnInit(): void {
 
 

@@ -8,5 +8,16 @@ import { Route, Router } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+  constructor(private router: Router) {
+    this.router.events.subscribe(
+      () => {
+        this.showHeader = this.router.url!=""
+      }
+    )
+  }
+
+  showHeader: boolean = false;
+
+
 
 }

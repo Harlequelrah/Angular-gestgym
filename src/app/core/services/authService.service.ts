@@ -15,7 +15,7 @@ import { refreshToken } from "../types/refreshToken.type";
 )
 export class AuthService{
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(private http: HttpClient) { }
 
 
     login(formValue: userLogin): Observable<Token>{
@@ -34,7 +34,7 @@ export class AuthService{
     }
     logout(): void{
         localStorage.clear();
-        this.router.navigateByUrl("/");
+
     }
 
 

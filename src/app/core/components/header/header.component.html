@@ -1,0 +1,16 @@
+<header>
+  <nav class="navbar">
+  <a class="navbar__link" routerLink="accueil" routerLinkActive="active">Accueil</a>
+  <a class="navbar__link" routerLink="customers" routerLinkActive="active">Customer</a>
+  <a class="navbar__link" routerLink="users" routerLinkActive="active">Utilisateur</a>
+  <a class="navbar__link" routerLink="packs" routerLinkActive="active">Pack</a>
+    <a class="navbar__link">
+      <button (click)="onLogOut()">
+        Logout
+        <i class="bx bxs-log-out-circle"></i>
+
+      </button>
+
+    </a>
+  </nav>
+</header>

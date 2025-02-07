@@ -8,18 +8,25 @@ import { jwtPayload } from "../types/jwtPayload.type";
 )
 export class JwtService {
 
-    hasRole(token: string , role: string): boolean {
-        const decoded = this.decodeToken(token);
-        if ((decoded as any).role === role) {
-            return true;
-        } else {
-            return false;
+    hasRole(role: string): boolean {
+        const token = localStorage.getItem("access_token");
+        if (token && this.isValidToken(token))
+        {
+            const decoded = this.decodeToken(token);
+            if ((decoded as any).role === role) {
+                return true;
+            }
         }
+        return false;
+
     }
 
-    decodeToken(token: string): jwtPayload | null {
+    decodeToken(token:string): jwtPayload | null {
         try {
-            return jwtDecode(token);
+            if (token) {
+                return jwtDecode(token);
+            }
+            return null;
         }
         catch (error) {
             console.log("Invalid token", error)
@@ -27,7 +34,7 @@ export class JwtService {
         }
     }
 
-    isValidToken(token: string): boolean {
+    isValidToken(token:string): boolean {
         const decoded = this.decodeToken(token);
         if (decoded) {
             const currentTimestamp = Math.floor(Date.now() / 1000);

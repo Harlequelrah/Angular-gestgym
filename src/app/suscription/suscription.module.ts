@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SuscriptionListComponent } from './components/suscription-list/suscription-list.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    SuscriptionListComponent
+  ],
   imports: [
     CommonModule
   ]
