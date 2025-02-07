@@ -1,17 +1,15 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './components/header/header.component';
+import { NgModule } from '@angular/core';
 import { FooterComponent } from './components/footer/footer.component';
-import { httpInterceptorsProviders } from './interceptors';
-import { NotFoundComponent } from './components/not-found/not-found.component';
 import { NotAuthorizedComponent } from './components/not-authorized/not-authorized.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 import { CoreRoutingModule } from './core-routing.module';
+import { httpInterceptorsProviders } from './interceptors';
 
 
 
 @NgModule({
   declarations: [
-    HeaderComponent,
     FooterComponent,
     NotFoundComponent,
     NotAuthorizedComponent
@@ -22,7 +20,6 @@ import { CoreRoutingModule } from './core-routing.module';
   ],
   exports: [
     CoreRoutingModule,
-    HeaderComponent,
     FooterComponent,
     NotFoundComponent,
     NotAuthorizedComponent

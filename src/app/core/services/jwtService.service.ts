@@ -3,12 +3,12 @@ import { jwtDecode } from 'jwt-decode';
 import { jwtPayload } from "../types/jwtPayload.type";
 @Injectable(
     {
-        providedIn:'root'
+        providedIn: 'root'
     }
 )
 export class JwtService {
 
-    hasRole(token: string | null,role:string):boolean {
+    hasRole(token: string , role: string): boolean {
         const decoded = this.decodeToken(token);
         if ((decoded as any).role === role) {
             return true;
@@ -17,15 +17,9 @@ export class JwtService {
         }
     }
 
-    decodeToken(token: string | null):jwtPayload|null {
+    decodeToken(token: string): jwtPayload | null {
         try {
-            if (token != null) {
-                return jwtDecode(token)
-            }
-            else {
-                console.log("Pas de token");
-                return null
-            }
+            return jwtDecode(token);
         }
         catch (error) {
             console.log("Invalid token", error)
@@ -33,11 +27,11 @@ export class JwtService {
         }
     }
 
-    isValidToken(token: string | null): boolean {
+    isValidToken(token: string): boolean {
         const decoded = this.decodeToken(token);
-        if (token != null &&  decoded){
+        if (decoded) {
             const currentTimestamp = Math.floor(Date.now() / 1000);
-            return decoded.exp>currentTimestamp;
+            return decoded.exp > currentTimestamp;
         }
         else {
             return false;

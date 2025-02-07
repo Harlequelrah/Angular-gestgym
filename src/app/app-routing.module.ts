@@ -17,11 +17,6 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'accueil',
-    component: LandingPageComponent,
-    canActivate:[AuthGuard]
-  },
-  {
     path: '**',
     component:NotFoundComponent
   }
