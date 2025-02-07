@@ -45,8 +45,9 @@
             ],
             "styles": [
               "src/styles.scss",
-              "src/styles.css",
-              "./node_modules/"
+              "src/tailwindcss-styles.css",
+              "src/fonts-styles.scss",
+              "./node_modules/boxicons/css/boxicons.min.css"
             ],
             "scripts": []
           },
@@ -110,8 +111,10 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
-              "src/styles.css"
+                "src/styles.scss",
+                "src/tailwindcss-styles.css",
+                "src/fonts-styles.scss",
+                "./node_modules/boxicons/css/boxicons.min.css"
             ],
             "scripts": []
           }
