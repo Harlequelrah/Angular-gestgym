@@ -1,0 +1,68 @@
+
+<div class="min-h-screen flex flex-row bg-gray-100">
+  <div class="flex flex-col w-56 bg-white rounded-r-3xl overflow-hidden">
+    <div class="flex  justify-center items-center h-30 shadow-md">
+      <img class="logo-img" src="/assets/images/Elrah.png" alt="">
+      <div class="flex-auto justify-center items-center text-center ">
+      <h1 class="poppins-extrabold text-purple-500">Bienvenue</h1>
+      <h2 class="underline poppins-regular text-amber-400">{{username}}</h2>
+      </div>
+
+    </div>
+    <ul class="flex flex-col py-4">
+      <li>
+        <a routerLink="accueil" routerLinkActive="poppins-bold  underline text-gray-800"
+          class="flex flex-row items-center h-16 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+          <span class="inline-flex items-center justify-center h-16 w-12 text-2xl text-gray-400"><i
+              class="bx bx-home"></i></span>
+          <span class="text-xl font-medium">Accueil</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="customers" routerLinkActive="poppins-bold  underline text-gray-800"
+          class="flex flex-row items-center h-16 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+          <span class="inline-flex items-center justify-center h-16 w-12 text-2xl text-gray-400"><i
+              class="bx bx-user"></i></span>
+          <span class="text-xl font-medium">Clients</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="users" routerLinkActive="poppins-bold  underline text-gray-800"
+          class="flex flex-row items-center h-16 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+          <span class="inline-flex items-center justify-center h-16 w-12 text-2xl text-gray-400"><i
+              class="bx bxs-user-account"></i></span>
+          <span class="text-xl font-medium">Utilisateurs</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="packs" routerLinkActive="poppins-bold  underline text-gray-800"
+          class="flex flex-row items-center h-16 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+          <span class="inline-flex items-center justify-center h-16 w-12 text-2xl text-gray-400"><i
+              class="bx bx-package"></i></span>
+          <span class="text-xl font-medium">Packs</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="suscriptions" routerLinkActive="poppins-bold  underline text-gray-800"
+          class="flex flex-row items-center h-16 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+          <span class="inline-flex items-center justify-center h-16 w-12 text-2xl text-gray-400"><i
+              class="bx bx-id-card"></i></span>
+          <span class="text-xl font-medium">Souscriptions</span>
+        </a>
+      </li>
+      <li>
+        <a
+          class="flex flex-row items-center h-16 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+          <span class="inline-flex items-center justify-center h-16 w-12 text-2xl text-gray-400"><i
+              class="bx bx-log-out"></i></span>
+          <span class="text-xl font-medium">
+            <button (click)="onLogOut()">
+            Se deconnecter
+            </button>
+
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

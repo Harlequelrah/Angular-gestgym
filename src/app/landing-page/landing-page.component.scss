@@ -1,26 +1,26 @@
-.container {
+.welcome-container {
     display: flex;
-    // flex-direction: column;
     justify-content: center;
     align-items: center;
 
     img {
         width: 60%;
-        height: auto;
+        height: 100vh;
     }
 
-    .welcome-container {
+    .welcome-wrapper {
 
-        justify-content: space-between;
-        align-items: center;
+        // justify-content: space-between;
+        // align-items: center;
         padding: 10px 20px;
         margin: 10px 0;
-        background: transparent;
+        // background: transparent;
         width: 40%;
 
-        img {
-            width: 50%;
-            margin-bottom: 10px;
+        .welcome-content{
+            margin : 10px 0;
+            border:2px solid rgba(255,255,255,.1);
+            box-shadow : 4px 4px 10px rgba(0,0,0,.1);
         }
 
     }

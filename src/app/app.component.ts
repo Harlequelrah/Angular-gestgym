@@ -8,15 +8,21 @@ import { Route, Router } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+  showHeader: boolean = false;
+  showDashboard: boolean = false;
+  showSidebar: boolean = false;
   constructor(private router: Router) {
     this.router.events.subscribe(
       () => {
-        this.showHeader = this.router.url!=""
+        this.showHeader = this.router.url != "";
+        this.showDashboard = this.router.url != "/";
+        this.showSidebar = this.router.url != "/";
+
       }
     )
   }
 
-  showHeader: boolean = false;
+
 
 
 

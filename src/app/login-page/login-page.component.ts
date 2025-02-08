@@ -15,8 +15,9 @@ export class LoginPageComponent implements OnInit {
 
   constructor(private auth: AuthService, private router: Router, private formBuilder: FormBuilder) { }
   loginForm!: FormGroup;
-
+  isPasswordVisible: boolean = false;
   ngOnInit(): void {
+
 
     this.loginForm = this.formBuilder.group(
       {
@@ -35,6 +36,11 @@ export class LoginPageComponent implements OnInit {
       )
     ).subscribe();
 
+  }
+
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
 }
