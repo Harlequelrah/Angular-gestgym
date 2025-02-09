@@ -15,7 +15,7 @@ import { refreshToken } from "../types/refreshToken.type";
 )
 export class AuthService{
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient,private router:Router) { }
 
 
     login(formValue: userLogin): Observable<Token>{
@@ -34,14 +34,13 @@ export class AuthService{
     }
     logout(): void{
         localStorage.clear();
-
+        this.router.navigateByUrl("/");
     }
 
 
 
     refreshToken(refresh_token: refreshToken): Observable<accessToken>{
         return this.http.post<accessToken>(`${environment.ApiUrl}/refresh-token`, refresh_token).pipe(
-            take(1),
             tap(
                 (response: accessToken) => {
                     localStorage.setItem("access_token", response.access_token)

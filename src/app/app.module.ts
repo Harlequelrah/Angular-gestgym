@@ -9,6 +9,7 @@ import { RouterOutlet } from '@angular/router';
 import { CoreModule } from './core/core.module';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CustomerModule } from './customer/customer.module';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { CustomerModule } from './customer/customer.module';
     provideHttpClient(withInterceptorsFromDi()),
     {
       provide:LOCALE_ID,useValue:'fr-FR'
-    }
+    },
+    provideAnimationsAsync()
 
   ],
   bootstrap: [AppComponent]

@@ -19,7 +19,6 @@ export class SidebarComponent {
 
   onLogOut(): void{
     this.auth.logout();
-    this.router.navigateByUrl("/");
   }
   openSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;

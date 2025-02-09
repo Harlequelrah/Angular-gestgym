@@ -1,0 +1,38 @@
+<div *ngIf="isVisible" class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>{{ customerData ? 'Modifier Client' : 'Ajouter Client' }}</h3>
+      <button (click)="close()" class="close-btn">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+        <label>Prénom :</label>
+        <input type="text" formControlName="first_name" required>
+        <div *ngIf="customerForm.controls.first_name.invalid && customerForm.controls.first_name.touched">
+          <small class="error">Le prénom est requis (2-50 caractères).</small>
+        </div>
+
+        <label>Nom :</label>
+        <input type="text" formControlName="last_name" required>
+        <div *ngIf="customerForm.controls.last_name.invalid && customerForm.controls.last_name.touched">
+          <small class="error">Le nom est requis (2-50 caractères).</small>
+        </div>
+
+        <label>Téléphone :</label>
+        <input type="text" formControlName="phone_number" required>
+        <div *ngIf="customerForm.controls.phone_number.invalid && customerForm.controls.phone_number.touched">
+          <small class="error">Format de téléphone invalide.</small>
+        </div>
+
+        <label>
+          <input type="checkbox" formControlName="active_suscription">
+          Abonnement actif
+        </label>
+
+        <button type="submit" [disabled]="customerForm.invalid">Valider</button>
+        <button type="button" (click)="close()">Annuler</button>
+      </form>
+    </div>
+  </div>
+</div>
