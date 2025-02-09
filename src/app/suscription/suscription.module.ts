@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SuscriptionListComponent } from './components/suscription-list/suscription-list.component';
+import { SuscriptionRoutingModule } from './suscription-routing.module';
 
 
 
@@ -9,7 +10,8 @@ import { SuscriptionListComponent } from './components/suscription-list/suscript
     SuscriptionListComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SuscriptionRoutingModule
   ]
 })
 export class SuscriptionModule { }

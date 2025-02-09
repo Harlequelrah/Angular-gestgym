@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { PackListComponent } from './components/pack-list/pack-list.component';
+import { PackRoutingModule } from './pack-routing.module';
 
 
 
@@ -10,10 +11,7 @@ import { PackListComponent } from './components/pack-list/pack-list.component';
   ],
   imports: [
     CommonModule,
-    CurrencyPipe
-  ],
-  providers: [
-    CurrencyPipe
+    PackRoutingModule
   ],
   exports: [
     PackListComponent

@@ -2,10 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import { CustomerListComponent } from './customer/components/customer-list/customer-list.component';
 import { PackListComponent } from './pack/components/pack-list/pack-list.component';
-import { UserListComponent } from './user/components/user-list/user-list.component';
 import { SuscriptionListComponent } from './suscription/components/suscription-list/suscription-list.component';
+import { UserListComponent } from './user/components/user-list/user-list.component';
 
 const routes: Routes = [
 
@@ -16,16 +15,21 @@ const routes: Routes = [
     data: {roles:["ADMIN","RECEPTIONIST"]}
   },
   {
+    path: 'customers',
+    loadChildren:()=> import('./customer/customer.module').then((m)=>(m.CustomerModule))
+  },
+  {
     path: 'packs',
-    component:PackListComponent
+    loadChildren:()=>import('./pack/pack.module').then((m)=>(m.PackModule))
   },
   {
     path: 'users',
-    component:UserListComponent
+    loadChildren:()=> import('./user/user.module').then((m)=>(m.UserModule))
+
   },
   {
     path: 'suscriptions',
-    component:SuscriptionListComponent
+    loadChildren:()=>import('./suscription/suscription.module').then((m)=>(m.SuscriptionModule))
   }
 
 

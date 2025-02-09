@@ -1,4 +1,4 @@
-<div *ngIf="isVisible" class="modal-backdrop">
+<div class="modal-backdrop">
   <div class="modal">
     <div class="modal-header">
       <h3>{{ customerData ? 'Modifier Client' : 'Ajouter Client' }}</h3>
@@ -7,31 +7,41 @@
 
     <div class="modal-body">
       <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
-        <label>Prénom :</label>
-        <input type="text" formControlName="first_name" required>
-        <div *ngIf="customerForm.controls.first_name.invalid && customerForm.controls.first_name.touched">
-          <small class="error">Le prénom est requis (2-50 caractères).</small>
+        <div class="form-group">
+          <div class="input-container">
+            <label for="first_name">Prénom :</label>
+            <input id="first_name" type="text" formControlName="first_name" required>
+            <div *ngIf="customerForm.controls['first_name'].invalid && customerForm.controls['first_name'].touched">
+              <small class="error">Le prénom est requis (2-50 caractères).</small>
+            </div>
+          </div>
+
+          <div class="input-container">
+            <label for="last_name">Nom :</label>
+            <input id="last_name" type="text" formControlName="last_name" required>
+            <div *ngIf="customerForm.controls['last_name'].invalid && customerForm.controls['last_name'].touched">
+              <small class="error">Le nom est requis (2-50 caractères).</small>
+            </div>
+          </div>
         </div>
 
-        <label>Nom :</label>
-        <input type="text" formControlName="last_name" required>
-        <div *ngIf="customerForm.controls.last_name.invalid && customerForm.controls.last_name.touched">
-          <small class="error">Le nom est requis (2-50 caractères).</small>
+        <div class="input-container">
+          <label for="phone_number">Téléphone :</label>
+          <input id="phone_number" type="text" formControlName="phone_number" required>
+          <div *ngIf="customerForm.controls['phone_number'].invalid && customerForm.controls['phone_number'].touched">
+            <small class="error">Format de téléphone invalide.</small>
+          </div>
         </div>
 
-        <label>Téléphone :</label>
-        <input type="text" formControlName="phone_number" required>
-        <div *ngIf="customerForm.controls.phone_number.invalid && customerForm.controls.phone_number.touched">
-          <small class="error">Format de téléphone invalide.</small>
+        <div class="checkbox-container">
+          <input type="checkbox" id="active_suscription" formControlName="active_suscription">
+          <label for="active_suscription">Abonnement actif</label>
         </div>
 
-        <label>
-          <input type="checkbox" formControlName="active_suscription">
-          Abonnement actif
-        </label>
-
-        <button type="submit" [disabled]="customerForm.invalid">Valider</button>
-        <button type="button" (click)="close()">Annuler</button>
+        <div class="button-container">
+          <button type="submit" [disabled]="customerForm.invalid">Valider</button>
+          <button type="button" (click)="close()">Annuler</button>
+        </div>
       </form>
     </div>
   </div>

@@ -27,11 +27,15 @@ export class CustomerService{
     }
 
     public createCustomer(customer: customerForm): Observable<Customer>{
-        return this.http.post<Customer>(`${this.baseUrl}/create-customer`,customer);
+        return this.http.post<Customer>(`${this.baseUrl}/save-customer`,customer);
     }
 
     public updateCustomer(customer_id: number, customer: Customer): Observable<Customer>{
-        return this.http.put<Customer>(`${this.baseUrl}/update-customer`, customer);
+        return this.http.put<Customer>(`${this.baseUrl}/update-customer/${customer_id}`, customer);
+    }
+
+    public deleteCustomer(customer_id: number): Observable<void>{
+        return this.http.delete<void>(`${this.baseUrl}/delete-customer/${customer_id}`);
     }
 
 }
