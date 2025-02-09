@@ -8,12 +8,10 @@ import { Router } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit{
+export class SidebarComponent {
   username: string | null = null;
-  constructor(private jwtService: JwtService , private auth:AuthService , private router:Router) { }
-
-  ngOnInit(): void {
-    this.username = this.jwtService.getUsername();
+  constructor(private jwtService: JwtService, private auth: AuthService, private router: Router) {
+        this.username = this.jwtService.getUsername();
   }
 
   isSidebarOpen: boolean = true;
