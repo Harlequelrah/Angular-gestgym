@@ -8,6 +8,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { RouterOutlet } from '@angular/router';
 import { CoreModule } from './core/core.module';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { CustomerModule } from './customer/customer.module';
 
 
 @NgModule({
@@ -18,11 +19,13 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
   ],
   imports: [
     BrowserModule,
+    CustomerModule,
     AppRoutingModule,
     CoreModule,
     LoginPageComponent,
     LandingPageComponent,
-    RouterOutlet
+    RouterOutlet,
+
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),

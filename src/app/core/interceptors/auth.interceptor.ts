@@ -1,6 +1,6 @@
 import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, tap, pipe, switchMap } from "rxjs";
+import { Observable, tap, pipe, switchMap, take, map } from "rxjs";
 import { AuthService } from "../services/authService.service";
 import { JwtService } from "../services/jwtService.service";
 import { refreshToken } from "../types/refreshToken.type";
@@ -28,18 +28,33 @@ export class AuthInterceptor implements HttpInterceptor {
             const refresh: refreshToken = {
                 refresh_token
             }
-            return this.auth.refreshToken(refresh).pipe(
-                switchMap(
-                    (token: accessToken) => {
-                        const headers = new HttpHeaders()
-                            .append('Content-Type', 'Application/json')
-                            .append('Authorization', `Bearer ${token.access_token}`)
-                        const modifReq = req.clone({ headers });
-                        return next.handle(modifReq);
-                    }
-                )
+            // console.log(refresh);
 
+            return next.handle(req).pipe(
+                switchMap(() =>
+                    this.auth.refreshToken(refresh).pipe(
+                        switchMap((token: accessToken) => {
+                            const headers = new HttpHeaders()
+                                .append('Content-Type', 'Application/json')
+                                .append('Authorization', `Bearer ${token.access_token}`);
+                            const modifReq = req.clone({ headers });
+                            return next.handle(modifReq);
+                        })
+                    )
+                )
             );
+            // return this.auth.refreshToken(refresh).pipe(
+            //     switchMap(
+            //         (token: accessToken) => {
+            //             const headers = new HttpHeaders()
+            //                 .append('Content-Type', 'Application/json')
+            //                 .append('Authorization', `Bearer ${token.access_token}`)
+            //             const modifReq = req.clone({ headers });
+            //             return next.handle(modifReq);
+            //         }
+            //     )
+
+            // );
         }
         else {
             console.log(" handling normal request");

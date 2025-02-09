@@ -16,10 +16,6 @@ const routes: Routes = [
     data: {roles:["ADMIN","RECEPTIONIST"]}
   },
   {
-    path: 'customers',
-    component:CustomerListComponent
-  },
-  {
     path: 'packs',
     component:PackListComponent
   },
