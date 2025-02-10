@@ -17,11 +17,11 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   public getAllUser(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/read-all`);
+    return this.http.get<User[]>(`${this.baseUrl}`);
   }
 
   public getOneUser(user_id: number): Observable<User> {
-    return this.http.get<User>(`${this.baseUrl}/read-one/${user_id}`);
+    return this.http.get<User>(`${this.baseUrl}/${user_id}`);
   }
 
   public createUser(user: userForm):
@@ -34,10 +34,10 @@ export class UserService {
 
   public updateUser(user_id: number, user: User): Observable<User> {
     user.role = "RECEPTIONIST";
-    return this.http.put<User>(`${this.baseUrl}/update/${user_id}`, user);
+    return this.http.put<User>(`${this.baseUrl}/${user_id}`, user);
   }
 
   public deleteUser(user_id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/delete/${user_id}`);
+    return this.http.delete<void>(`${this.baseUrl}/${user_id}`);
   }
 }
