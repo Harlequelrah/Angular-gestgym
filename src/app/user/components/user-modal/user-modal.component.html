@@ -1,1 +1,68 @@
-<p>user-modal works!</p>
+<div class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>{{ userData ? 'Modifier Utilisateur' : 'Ajouter Utilisateur' }}</h3>
+      <button (click)="close()" class="close-btn">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <div class="input-container">
+            <label for="firstName">Prénom :</label>
+            <input id="firstName" type="text" formControlName="firstName" required>
+            <div *ngIf="userForm.controls['firstName'].invalid && userForm.controls['firstName'].touched">
+              <small class="error">Le prénom est requis (2-50 caractères).</small>
+            </div>
+          </div>
+
+          <div class="input-container">
+            <label for="lastName">Nom :</label>
+            <input id="lastName" type="text" formControlName="lastName" required>
+            <div *ngIf="userForm.controls['lastName'].invalid && userForm.controls['lastName'].touched">
+              <small class="error">Le nom est requis (2-50 caractères).</small>
+            </div>
+          </div>
+
+          <div class="input-container">
+            <label for="username">Nom d'utilisateur :</label>
+            <input id="username" type="text" formControlName="username" required>
+            <div *ngIf="userForm.controls['username'].invalid && userForm.controls['username'].touched">
+              <small class="error">Le nom d'utilisateur est requis (2-50 caractères).</small>
+            </div>
+          </div>
+
+          <div class="input-container">
+            <label for="password">Mot de passe :</label>
+            <div class="password-wrapper">
+              <input id="password" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password" required>
+              <span class="toggle-password" (click)="togglePasswordVisibility()">
+                <i class="material-icons">{{ isPasswordVisible ? 'visibility' : 'visibility_off' }}</i>
+              </span>
+            </div>
+            <div *ngIf="userForm.controls['password'].invalid && userForm.controls['password'].touched">
+              <small class="error">
+                Le mot de passe doit être compris entre 8 et 50 caractères avec au minimum une majuscule, une minuscule,
+                un
+                chiffre, un caractère spécial.
+              </small>
+            </div>
+          </div>
+
+
+        </div>
+
+
+        <div class="checkbox-container">
+          <input type="checkbox" id="active" formControlName="active">
+          <label for="active">Statut</label>
+        </div>
+
+        <div class="button-container">
+          <button type="submit" [disabled]="userForm.invalid">Valider</button>
+          <button type="button" (click)="close()">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

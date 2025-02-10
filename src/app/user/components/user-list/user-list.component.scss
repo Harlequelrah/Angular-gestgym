@@ -1,0 +1,85 @@
+.user-list-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    /* Ajout de la marge au tableau */
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.pagination button {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #ddd;
+}
+
+.pagination a {
+    color: #4a5568;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    margin: 0 2px;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    background-color: #edf2f7;
+}
+
+.pagination a.active {
+    background-color: #4a5568;
+    color: white;
+    border: 1px solid #4a5568;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.search-bar input {
+    padding-left: 2.5rem;
+    /* Adjust padding to make space for the icon */
+}
+
+.search-bar svg {
+    position: absolute;
+    left: 0.75rem;
+    /* Adjust position of the icon */
+    pointer-events: none;
+}
