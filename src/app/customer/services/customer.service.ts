@@ -17,7 +17,7 @@ export class CustomerService{
 
     constructor(private http:HttpClient){}
 
-    public getAllCustomer(): Observable<Customer[]>{
+    public getAllCustomers(): Observable<Customer[]>{
         return this.http.get<Customer[]>(`${this.baseUrl}`);
     }
 

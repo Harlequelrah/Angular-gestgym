@@ -26,7 +26,7 @@ export class UserListComponent implements OnInit {
   }
 
   loadUsers(): void {
-    this.users$ = this.userService.getAllUser();
+    this.users$ = this.userService.getAllUsers();
   }
 
   openUserModal(user?: User): void {

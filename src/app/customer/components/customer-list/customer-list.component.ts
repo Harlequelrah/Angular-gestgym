@@ -26,7 +26,7 @@ export class CustomerListComponent implements OnInit {
   }
 
   loadCustomers(): void {
-    this.customers$ = this.customerService.getAllCustomer();
+    this.customers$ = this.customerService.getAllCustomers();
   }
 
   openCustomerModal(customer?: Customer): void {
