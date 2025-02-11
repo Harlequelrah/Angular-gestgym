@@ -6,11 +6,18 @@ import { AuthGuard } from '../core/guards/auth.guard';
 
 const routes: Routes = [
   {
+    path: 'subscribe-customer/:customer_id',
+    component: PackListComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ["ADMIN", "RECEPTIONIST"] }
+  },
+  {
     path: '',
     component: PackListComponent,
     canActivate: [AuthGuard],
     data: {roles: ["ADMIN","RECEPTIONIST"]}
   }
+
 ]
 
 @NgModule({

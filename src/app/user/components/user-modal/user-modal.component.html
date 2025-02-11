@@ -35,9 +35,10 @@
           <div class="input-container">
             <label for="password">Mot de passe :</label>
             <div class="password-wrapper">
-              <input id="password" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password" required>
+              <input id="password" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password">
               <span class="toggle-password" (click)="togglePasswordVisibility()">
-                <i class="material-icons">{{ isPasswordVisible ? 'visibility' : 'visibility_off' }}</i>
+        <i class="bx" [class.bxs-lock]="!isPasswordVisible" [class.bxs-lock-open]="isPasswordVisible">
+        </i>
               </span>
             </div>
             <div *ngIf="userForm.controls['password'].invalid && userForm.controls['password'].touched">

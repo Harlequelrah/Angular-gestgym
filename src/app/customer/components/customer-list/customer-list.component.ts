@@ -4,6 +4,7 @@ import { Customer } from '../../models/Customer';
 import { CustomerService } from '../../services/customer.service';
 import { Observable } from 'rxjs';
 import { CustomerModalComponent } from '../customer-modal/customer-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer-list',
@@ -12,18 +13,32 @@ import { CustomerModalComponent } from '../customer-modal/customer-modal.compone
   styleUrl: './customer-list.component.scss'
 })
 export class CustomerListComponent implements OnInit {
+  onSearch() {
+    if (this.searchTerm == '') {
+      this.loadCustomers();
+    }
+    else {
+      this.customers$ = this.customerService.getOneCustomerByName(this.searchTerm);
+    }
+
+}
+
+
   customers$!: Observable<Customer[]>;
   selectedCustomer?: Customer;  // Pour garder la référence au client sélectionné
   isModalOpen = false; // Pour gérer l'état de visibilité du modal
+  searchTerm: string = '';
 
   constructor(
     private customerService: CustomerService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router:Router
   ) { }
 
   ngOnInit(): void {
     this.loadCustomers();
   }
+
 
   loadCustomers(): void {
     this.customers$ = this.customerService.getAllCustomers();
@@ -67,5 +82,14 @@ export class CustomerListComponent implements OnInit {
   // Gère l'enregistrement d'un client depuis le modal
   onCustomerSaved(customer: Customer): void {
     this.loadCustomers(); // Rafraîchir la liste après sauvegarde
+  }
+
+  subscribeCustomer(customer_id: number) {
+    this.router.navigateByUrl(`packs/subscribe-customer/${customer_id}`);
+  }
+
+  viewSuscription(customer_id: number) {
+    this.router.navigateByUrl(`suscriptions/customer/${customer_id}`)
+
   }
 }

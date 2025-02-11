@@ -9,7 +9,6 @@
       <div class="input-box">
         <input type="password" placeholder="Password" formControlName="password"
           [type]="isPasswordVisible ? 'text' : 'password'" />
-
         <i class="bx" [class.bxs-lock]="!isPasswordVisible" [class.bxs-lock-open]="isPasswordVisible"
           (click)="togglePasswordVisibility()">
         </i>

@@ -31,7 +31,7 @@ export class UserModalComponent implements OnInit {
     this.userForm = this.fb.group({
       firstName: [this.userData?.firstName || '', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       lastName: [this.userData?.lastName || '', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$")
+      password: ['', [Validators.minLength(8), Validators.maxLength(50), Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$")
       ]],
       active: [this.userData?.active || false],
       username: [this.userData?.username || '', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],

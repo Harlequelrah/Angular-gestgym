@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { Customer } from "../models/Customer";
 import { environment } from "../../core/environments/environment";
 import { HttpClient } from "@angular/common/http";
@@ -12,6 +12,15 @@ import { customerForm } from "../types/customerForm.type";
     }
 )
 export class CustomerService{
+    getOneCustomerByName(searchTerm: string): Observable<Customer[]> {
+        return this.http.get<Customer>(`${this.baseUrl}/search?full_name=${searchTerm}`).pipe(
+            map(
+                (customer) => {
+                    return [customer];
+                }
+            )
+        );
+    }
 
     private baseUrl: string = `${environment.ApiUrl}/customers`;
 

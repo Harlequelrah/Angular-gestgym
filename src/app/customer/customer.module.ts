@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { CustomerRoutingModule } from './customer-routing.module';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CustomerListComponent } from './components/customer-list/customer-list.component';
 import { CustomerModalComponent } from './components/customer-modal/customer-modal.component';
@@ -21,7 +21,8 @@ import { CustomerModalComponent } from './components/customer-modal/customer-mod
     CommonModule,
     CustomerRoutingModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule
   ],
   exports: [
     CustomerListComponent,
