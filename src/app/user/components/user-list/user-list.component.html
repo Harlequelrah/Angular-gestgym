@@ -92,10 +92,15 @@
                     <p class="text-gray-900 whitespace-no-wrap">{{ user.role}}</p>
                   </td>
                   <td class="flex justify-between px-5 py-5 border-b border-gray-200 bg-white text-xl">
-                    <i (click)="editUser(user)"
-                      class="bx bxs-edit-alt cursor-pointer text-green-600 hover:text-green-800"></i>
-                    <i (click)="deleteUser(user.id)"
-                      class="bx bxs-trash-alt cursor-pointer text-red-600 hover:text-red-800"></i>
+                    @if(user.role=='ADMIN'){
+                        <i class="bx bx-error-alt cursor-pointer text-red-600 hover:text-red-800"></i>
+                        <i class="bx bx-error-alt cursor-pointer text-red-600 hover:text-red-800"></i>
+                    }
+                    @else{
+                        <i (click)="editUser(user)" class="bx bxs-edit-alt cursor-pointer text-green-600 hover:text-green-800"></i>
+                        <i (click)="deleteUser(user.id)" class="bx bxs-trash-alt cursor-pointer text-red-600 hover:text-red-800"></i>
+                    }
+
                   </td>
                 </tr>
               </tbody>

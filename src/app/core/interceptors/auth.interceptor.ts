@@ -17,7 +17,6 @@ export class AuthInterceptor implements HttpInterceptor {
         const refresh_token = localStorage.getItem("refresh_token");
         console.log("requete en cours");
         if (req.url.includes('/refresh-token') || req.url.includes('/login')) {
-            console.log("requete de rafraichissement");
             return next.handle(req);
         }
         else if (access_token != null && this.jwtService.isValidToken(access_token)) {

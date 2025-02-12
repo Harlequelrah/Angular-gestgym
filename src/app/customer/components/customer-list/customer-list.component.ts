@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Customer } from '../../models/Customer';
 import { CustomerService } from '../../services/customer.service';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { CustomerModalComponent } from '../customer-modal/customer-modal.component';
 import { Router } from '@angular/router';
 
@@ -23,7 +23,8 @@ export class CustomerListComponent implements OnInit {
 
 }
 
-
+  active_customer_suscription_count!: number;
+  inactive_customer_suscription_count!: number;
   customers$!: Observable<Customer[]>;
   selectedCustomer?: Customer;  // Pour garder la référence au client sélectionné
   isModalOpen = false; // Pour gérer l'état de visibilité du modal
@@ -41,7 +42,14 @@ export class CustomerListComponent implements OnInit {
 
 
   loadCustomers(): void {
-    this.customers$ = this.customerService.getAllCustomers();
+    this.customers$ = this.customerService.getAllCustomers().pipe(
+      tap(
+        (customers) => {
+        this.active_customer_suscription_count = customers.filter(customer => customer.active_suscription).length;
+        this.inactive_customer_suscription_count = customers.filter(customer => !customer.active_suscription).length;
+        }
+      )
+    );
   }
 
   openCustomerModal(customer?: Customer): void {

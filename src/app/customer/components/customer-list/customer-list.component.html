@@ -4,6 +4,16 @@
       <div class="py-8">
         <div class="flex justify-between items-center border-b pb-4">
           <h2 class="text-3xl font-extrabold text-gray-800">Clients</h2>
+          <div class="flex gap-4"></div>
+            <div class="flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-lg shadow">
+              <i class="bx bxs-check-circle text-2xl"></i>
+              <span class="text-lg font-semibold">Active: {{ active_customer_suscription_count }}</span>
+            </div>
+            <div class="flex items-center gap-2 bg-red-100 text-red-800 px-4 py-2 rounded-lg shadow">
+              <i class="bx bxs-x-circle text-2xl"></i>
+              <span class="text-lg font-semibold">Inactive: {{ inactive_customer_suscription_count }}</span>
+            </div>
+          </div>
           <button (click)="openCustomerModal()"
             class="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
             <i class="bx bxs-add-to-queue text-xl"></i>
@@ -144,7 +154,6 @@
                       </svg>
                     </a>
                   </nav>
-                </div>
               </div>
             </div>
           </div>

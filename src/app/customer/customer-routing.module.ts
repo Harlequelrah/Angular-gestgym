@@ -2,10 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { CustomerListComponent } from './components/customer-list/customer-list.component';
+import { AuthGuard } from '../core/guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    component:CustomerListComponent
+    component: CustomerListComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ["ADMIN", "RECEPTIONIST"] }
   }
 ]
 
@@ -16,6 +19,6 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes)
   ],
-  exports:[RouterModule]
+  exports: [RouterModule]
 })
 export class CustomerRoutingModule { }

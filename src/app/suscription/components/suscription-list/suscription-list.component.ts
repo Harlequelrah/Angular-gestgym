@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { map, Observable, tap } from 'rxjs';
 import { Suscription } from '../../models/Suscription';
 import { SuscriptionService } from '../../services/suscription.service';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-suscription-list',
@@ -12,20 +11,32 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './suscription-list.component.scss'
 })
 export class SuscriptionListComponent implements OnInit {
+
   suscriptions$!: Observable<Suscription[]>;
   customer_id: number | null = null;
-  pack_id: number | null=null;
-
+  pack_id: number | null = null;
+  chiffreAffaire!: number;
+  startDate: string = '';
+  endDate: string = '';
   constructor(
     private suscriptionService: SuscriptionService,
-    private route: ActivatedRoute,
-    private router:Router
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.prepareScreen();
     this.loadSuscriptions();
   }
+
+  getEndDate(suscription:Suscription): string {
+    const startDate = new Date(suscription.start_date);
+    const endDate = new Date(startDate);
+    endDate.setMonth(startDate.getMonth() + suscription.pack.duration_months);
+    return endDate.toISOString();
+  }
+
+
+
 
   prepareScreen(): void{
     const customerId = this.route.snapshot.paramMap.get('customer_id');
@@ -38,32 +49,109 @@ export class SuscriptionListComponent implements OnInit {
       this.pack_id = Number(packId);
     }
   }
+  calculateChiffreAffaire(suscriptions: Suscription[]): number {
+    return suscriptions
+      .filter(s => s.active)
+      .reduce((total, suscription) => total + suscription.pack.monthly_price, 0);
+  }
 
-  loadSuscriptions(): void {
+
+  filterData() {
+
+    if (!this.startDate || !this.endDate) {
+      alert('Les deux dates doivent être renseignées.');
+      return;
+    }
+
+
+    if (this.startDate === this.endDate) {
+      alert('La date de début et la date de fin ne peuvent pas être identiques.');
+      return;
+    }
+
+
+    const start = new Date(this.startDate);
+    const end = new Date(this.endDate);
+
+    if (start >= end) {
+      alert('La date de début doit être antérieure à la date de fin.');
+      return;
+    }
+
+
+    this.loadSuscriptions(start, end);
+  }
+
+  loadSuscriptions(startDate?: Date, endDate?: Date): void {
     if (this.customer_id) {
       console.log(`there is customer id ${this.customer_id}`);
-      this.suscriptions$ = this.suscriptionService.getSuscriptionsByCustomerId(this.customer_id);
+      this.suscriptions$ = this.suscriptionService.getSuscriptionsByCustomerId(this.customer_id).pipe(
+        map(suscriptions =>
+          (startDate) ? suscriptions.filter(s => {
+            const subscriptionStartDate = new Date(s.start_date);
+            const subscriptionEndDate = new Date(this.getEndDate(s));
+            subscriptionEndDate.setMonth(subscriptionStartDate.getMonth() + s.pack.duration_months);
+
+            return subscriptionStartDate >= startDate && endDate !== undefined && subscriptionEndDate <= endDate;
+          }) : suscriptions
+        ),
+        tap(suscriptions => {
+          this.chiffreAffaire = this.calculateChiffreAffaire(suscriptions);
+          console.log(`Chiffre d'affaire: ${this.chiffreAffaire}`);
+        })
+      );
     }
     else if (this.pack_id) {
       console.log(`there is pack id ${this.pack_id}`);
-      this.suscriptions$ = this.suscriptionService.getSuscriptionsByPackId(this.pack_id);
+      this.suscriptions$ = this.suscriptionService.getSuscriptionsByPackId(this.pack_id).pipe(
+        map(suscriptions =>
+          (startDate) ? suscriptions.filter(s => {
+            const subscriptionStartDate = new Date(s.start_date);
+            const subscriptionEndDate = new Date(this.getEndDate(s));
+
+            return subscriptionStartDate >= startDate && endDate !== undefined && subscriptionEndDate <= endDate;
+          }) : suscriptions
+        ),
+        tap(suscriptions => {
+          this.chiffreAffaire = this.calculateChiffreAffaire(suscriptions);
+          console.log(`Chiffre d'affaire: ${this.chiffreAffaire}`);
+        })
+      );
     }
     else {
       console.log("no id bro");
-      this.suscriptions$ = this.suscriptionService.getAllSuscriptions();
-    }
+      this.suscriptions$ = this.suscriptionService.getAllSuscriptions().pipe(
+        map(suscriptions =>
+          (startDate) ? suscriptions.filter(s => {
+            const subscriptionStartDate = new Date(s.start_date);
+            const subscriptionEndDate = new Date(this.getEndDate(s));
 
+            return subscriptionStartDate >= startDate && endDate !== undefined && subscriptionEndDate <= endDate;
+          }) : suscriptions
+        ),
+        tap(suscriptions => {
+          this.chiffreAffaire = this.calculateChiffreAffaire(suscriptions);
+          console.log(`Chiffre d'affaire: ${this.chiffreAffaire}`);
+        })
+      );
+    }
   }
 
+
   deleteSuscription(id: number): void {
-    // Implémentation de la suppression
+
     this.suscriptionService.deleteSuscription(id).subscribe(() => {
-      this.loadSuscriptions(); // Rafraîchir la liste après suppression
+      this.loadSuscriptions();
     });
   }
 
-  // Gère l'enregistrement d'un client depuis le modal
+
   onSuscriptionSaved(suscription: Suscription): void {
-    this.loadSuscriptions(); // Rafraîchir la liste après sauvegarde
+    this.loadSuscriptions();
+  }
+  changeSuscriptionStatus(suscription: Suscription) {
+    this.suscriptionService.changeSuscriptionStatus(suscription.id,suscription).subscribe(() => {
+      this.loadSuscriptions();
+    });
   }
 }

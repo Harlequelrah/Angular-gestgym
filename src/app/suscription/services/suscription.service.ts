@@ -39,4 +39,8 @@ export class SuscriptionService {
   public deleteSuscription(suscription_id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${suscription_id}`);
   }
+
+  public changeSuscriptionStatus(suscription_id: number,suscription:Suscription): Observable<Suscription>{
+    return this.http.put<Suscription>(`${this.baseUrl}/change-state/${suscription_id}`,suscription);
+  }
 }
