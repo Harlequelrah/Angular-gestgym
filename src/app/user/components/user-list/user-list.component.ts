@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { User } from '../../models/User';
 import { UserService } from '../../services/user.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { UserModalComponent } from '../user-modal/user-modal.component';
 
 @Component({
@@ -12,6 +12,8 @@ import { UserModalComponent } from '../user-modal/user-modal.component';
   styleUrl: './user-list.component.scss'
 })
 export class UserListComponent implements OnInit {
+  searchTerm: string = '';
+
   users$!: Observable<User[]>;
   selectedUser?: User;
   isModalOpen = false;
@@ -66,5 +68,14 @@ export class UserListComponent implements OnInit {
 
   onUserSaved(user: User): void {
     this.loadUsers();
+  }
+  onSearch() {
+    if (this.searchTerm === '') {
+      this.loadUsers();
+    } else {
+      this.users$ = this.users$.pipe(
+        map((users) => users.filter(user => user.lastName+' '+user.firstName === this.searchTerm))
+      );
+    }
   }
 }

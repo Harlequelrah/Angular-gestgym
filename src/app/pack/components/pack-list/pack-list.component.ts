@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { SuscriptionService } from '../../../suscription/services/suscription.service';
 import { suscriptionForm } from '../../../suscription/types/suscriptionForm.type';
 import { Pack } from '../../models/Pack';
@@ -17,11 +17,13 @@ import { PackModalComponent } from '../pack-modal/pack-modal.component';
 export class PackListComponent implements OnInit {
 
 
+
   packs$!: Observable<Pack[]>;
   selectedPack?: Pack;
   isModalOpen = false;
   canSubscribe: boolean = false;
   customer_id: number | null = null;
+searchTerm: string ='';
 
   constructor(
     private packService: PackService,
@@ -70,7 +72,7 @@ export class PackListComponent implements OnInit {
 
 
   deletePack(id: number): void {
-    
+
     this.packService.deletePack(id).subscribe(() => {
       this.loadPacks();
     });
@@ -104,5 +106,15 @@ export class PackListComponent implements OnInit {
   viewSuscription(pack_id: number) {
     this.router.navigateByUrl(`suscriptions/pack/${pack_id}`);
   }
+  onSearch() {
+    if (this.searchTerm === '') {
+      this.loadPacks();
+    } else {
+      this.packs$ = this.packs$.pipe(
+        map((packs) => packs.filter(pack => pack.offer_name === this.searchTerm))
+      );
+    }
+  }
+
 
 }

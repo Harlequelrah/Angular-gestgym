@@ -7,7 +7,9 @@ export class Suscription {
         public customer: Customer,
         public pack: Pack,
         public start_date: string,
-        public active: boolean
+        public active: boolean,
+        public customer_id?: number,
+        public pack_id?:number
     ) { }
 
 }

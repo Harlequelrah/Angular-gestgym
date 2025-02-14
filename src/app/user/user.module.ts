@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserModalComponent } from './components/user-modal/user-modal.component';
 import { UserRoutingModule } from './user-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 
 
@@ -17,7 +17,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     CommonModule,
     UserRoutingModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule
+    
   ],
   exports: [
     UserListComponent,

@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { map, Observable, tap } from 'rxjs';
 import { Suscription } from '../../models/Suscription';
 import { SuscriptionService } from '../../services/suscription.service';
+import { SuscriptionModalComponent } from '../suscription-modal/suscription-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-suscription-list',
@@ -12,7 +14,8 @@ import { SuscriptionService } from '../../services/suscription.service';
 })
 export class SuscriptionListComponent implements OnInit {
 
-
+  selectedSuscription?: Suscription;
+  isModalOpen = false;
   suscriptions$!: Observable<Suscription[]>;
   customer_id: number | null = null;
   pack_id: number | null = null;
@@ -21,6 +24,7 @@ export class SuscriptionListComponent implements OnInit {
   endDate: string = '';
   constructor(
     private suscriptionService: SuscriptionService,
+    private dialog: MatDialog,
     private route: ActivatedRoute
   ) { }
 
@@ -28,8 +32,29 @@ export class SuscriptionListComponent implements OnInit {
     this.prepareScreen();
     this.loadSuscriptions();
   }
+  openSuscriptionModal(suscription?: Suscription): void {
+    const dialogRef = this.dialog.open(SuscriptionModalComponent, {
+      width: '500px',
+      data: suscription ? { ...suscription } : null
+    });
 
-  getEndDate(suscription:Suscription): string {
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.loadSuscriptions();
+      }
+    });
+  }
+
+  editSuscription(suscription: Suscription): void {
+    this.openSuscriptionModal(suscription);
+  }
+
+  closePackModal(): void {
+    this.isModalOpen = false;
+  }
+
+
+  getEndDate(suscription: Suscription): string {
     const startDate = new Date(suscription.start_date);
     const endDate = new Date(startDate);
     endDate.setMonth(startDate.getMonth() + suscription.pack.duration_months);
@@ -39,14 +64,13 @@ export class SuscriptionListComponent implements OnInit {
 
 
 
-  prepareScreen(): void{
+  prepareScreen(): void {
     const customerId = this.route.snapshot.paramMap.get('customer_id');
     if (customerId) {
       this.customer_id = Number(customerId);
     }
     const packId = this.route.snapshot.paramMap.get('pack_id');
-    if (packId)
-    {
+    if (packId) {
       this.pack_id = Number(packId);
     }
   }
@@ -148,7 +172,7 @@ export class SuscriptionListComponent implements OnInit {
     this.loadSuscriptions();
   }
   changeSuscriptionStatus(suscription: Suscription) {
-    this.suscriptionService.changeSuscriptionStatus(suscription.id,suscription).subscribe(() => {
+    this.suscriptionService.changeSuscriptionStatus(suscription.id, suscription).subscribe(() => {
       this.loadSuscriptions();
     });
   }

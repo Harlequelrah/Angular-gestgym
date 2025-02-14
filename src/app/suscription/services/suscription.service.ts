@@ -1,14 +1,19 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { catchError, Observable } from "rxjs";
 import { Suscription } from "../models/Suscription";
 import { environment } from "../../core/environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { suscriptionForm } from "../types/suscriptionForm.type";
+import { ErrorHandlerService } from "../../core/services/ErrorHandlerService.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SuscriptionService {
+
+  private baseUrl: string = `${environment.ApiUrl}/suscriptions`;
+
+  constructor(private http: HttpClient,private errorHander:ErrorHandlerService) { }
   getSuscriptionsByCustomerId(customer_id: number): Observable<Suscription[]> {
     return this.http.get<Suscription[]>(`${this.baseUrl}/customer/${customer_id}`);
   }
@@ -16,9 +21,7 @@ export class SuscriptionService {
     return this.http.get<Suscription[]>(`${this.baseUrl}/pack/${pack_id}`);
   }
 
-  private baseUrl: string = `${environment.ApiUrl}/suscriptions`;
 
-  constructor(private http: HttpClient) {}
 
   public getAllSuscriptions(): Observable<Suscription[]> {
     return this.http.get<Suscription[]>(`${this.baseUrl}`);
@@ -41,6 +44,8 @@ export class SuscriptionService {
   }
 
   public changeSuscriptionStatus(suscription_id: number,suscription:Suscription): Observable<Suscription>{
-    return this.http.put<Suscription>(`${this.baseUrl}/change-state/${suscription_id}`,suscription);
+    return this.http.put<Suscription>(`${this.baseUrl}/change-state/${suscription_id}`, suscription).pipe(
+      catchError(err=>this.errorHander.handleError(err,"Le client ne peut avoir q'une souscription active"))
+    );
   }
 }
