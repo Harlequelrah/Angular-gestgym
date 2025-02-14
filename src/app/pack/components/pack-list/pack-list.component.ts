@@ -18,8 +18,8 @@ export class PackListComponent implements OnInit {
 
 
   packs$!: Observable<Pack[]>;
-  selectedPack?: Pack;  // Pour garder la référence au client sélectionné
-  isModalOpen = false; // Pour gérer l'état de visibilité du modal
+  selectedPack?: Pack;
+  isModalOpen = false;
   canSubscribe: boolean = false;
   customer_id: number | null = null;
 
@@ -49,43 +49,41 @@ export class PackListComponent implements OnInit {
   }
 
   openPackModal(pack?: Pack): void {
-    console.log('pack to open', pack);
     const dialogRef = this.dialog.open(PackModalComponent, {
       width: '500px',
-      data: pack ? { ...pack } : null  // <-- Les données sont bien passées ici
+      data: pack ? { ...pack } : null
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.loadPacks(); // Rafraîchir la liste après ajout/modification
+        this.loadPacks();
       }
     });
   }
 
 
 
-  // Méthode pour éditer un client (ouvre le modal)
+
   editPack(pack: Pack): void {
-    console.log('pack to edit', pack);
     this.openPackModal(pack);
   }
 
-  // Méthode pour supprimer un client
+
   deletePack(id: number): void {
-    // Implémentation de la suppression
+    
     this.packService.deletePack(id).subscribe(() => {
-      this.loadPacks(); // Rafraîchir la liste après suppression
+      this.loadPacks();
     });
   }
 
-  // Ferme le modal
+
   closePackModal(): void {
     this.isModalOpen = false;
   }
 
-  // Gère l'enregistrement d'un client depuis le modal
+
   onPackSaved(pack: Pack): void {
-    this.loadPacks(); // Rafraîchir la liste après sauvegarde
+    this.loadPacks();
   }
 
   subscribePack(pack_id: number): void{

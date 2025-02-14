@@ -12,6 +12,7 @@ import { SuscriptionService } from '../../services/suscription.service';
 })
 export class SuscriptionListComponent implements OnInit {
 
+
   suscriptions$!: Observable<Suscription[]>;
   customer_id: number | null = null;
   pack_id: number | null = null;
@@ -84,7 +85,6 @@ export class SuscriptionListComponent implements OnInit {
 
   loadSuscriptions(startDate?: Date, endDate?: Date): void {
     if (this.customer_id) {
-      console.log(`there is customer id ${this.customer_id}`);
       this.suscriptions$ = this.suscriptionService.getSuscriptionsByCustomerId(this.customer_id).pipe(
         map(suscriptions =>
           (startDate) ? suscriptions.filter(s => {
@@ -97,12 +97,11 @@ export class SuscriptionListComponent implements OnInit {
         ),
         tap(suscriptions => {
           this.chiffreAffaire = this.calculateChiffreAffaire(suscriptions);
-          console.log(`Chiffre d'affaire: ${this.chiffreAffaire}`);
+
         })
       );
     }
     else if (this.pack_id) {
-      console.log(`there is pack id ${this.pack_id}`);
       this.suscriptions$ = this.suscriptionService.getSuscriptionsByPackId(this.pack_id).pipe(
         map(suscriptions =>
           (startDate) ? suscriptions.filter(s => {
@@ -114,12 +113,11 @@ export class SuscriptionListComponent implements OnInit {
         ),
         tap(suscriptions => {
           this.chiffreAffaire = this.calculateChiffreAffaire(suscriptions);
-          console.log(`Chiffre d'affaire: ${this.chiffreAffaire}`);
+
         })
       );
     }
     else {
-      console.log("no id bro");
       this.suscriptions$ = this.suscriptionService.getAllSuscriptions().pipe(
         map(suscriptions =>
           (startDate) ? suscriptions.filter(s => {
@@ -131,7 +129,7 @@ export class SuscriptionListComponent implements OnInit {
         ),
         tap(suscriptions => {
           this.chiffreAffaire = this.calculateChiffreAffaire(suscriptions);
-          console.log(`Chiffre d'affaire: ${this.chiffreAffaire}`);
+
         })
       );
     }
@@ -154,4 +152,52 @@ export class SuscriptionListComponent implements OnInit {
       this.loadSuscriptions();
     });
   }
+
+  exportSuscriptions() {
+    this.suscriptions$.subscribe(suscriptions => {
+      if (!suscriptions || suscriptions.length === 0) {
+        alert("Aucune souscription à exporter.");
+        return;
+      }
+
+      const csvContent = this.convertToCSV(suscriptions);
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+
+      a.href = url;
+      a.download = "suscriptions.csv";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    });
+  }
+
+  private convertToCSV(suscriptions: Suscription[]): string {
+    if (!suscriptions.length) return "";
+
+
+    const headers = ["Id", "Client", "Pack", "Date Début", "Date Fin", "Status"].join(",") + "\n";
+
+
+    const rows = suscriptions.map(s => {
+      const id = s.id;
+      const client = `${s.customer.last_name} ${s.customer.first_name}`;
+      const pack = s.pack.offer_name;
+      const startDate = new Date(s.start_date).toLocaleString("fr-FR", {
+        day: "2-digit", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit"
+      });
+      const endDate = new Date(this.getEndDate(s)).toLocaleString("fr-FR", {
+        day: "2-digit", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit"
+      });
+      const status = s.active ? "Active" : "Inactive";
+
+      return `"${id}","${client}","${pack}","${startDate}","${endDate}","${status}"`;
+    }).join("\n");
+
+    return "\ufeff" + headers + rows;
+  }
+
+
 }

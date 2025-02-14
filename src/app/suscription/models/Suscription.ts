@@ -10,5 +10,4 @@ export class Suscription {
         public active: boolean
     ) { }
 
-    // Méthode pour calculer la date de fin
 }

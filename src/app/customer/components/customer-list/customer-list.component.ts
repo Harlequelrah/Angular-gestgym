@@ -26,8 +26,8 @@ export class CustomerListComponent implements OnInit {
   active_customer_suscription_count!: number;
   inactive_customer_suscription_count!: number;
   customers$!: Observable<Customer[]>;
-  selectedCustomer?: Customer;  // Pour garder la référence au client sélectionné
-  isModalOpen = false; // Pour gérer l'état de visibilité du modal
+  selectedCustomer?: Customer;
+  isModalOpen = false;
   searchTerm: string = '';
 
   constructor(
@@ -56,40 +56,40 @@ export class CustomerListComponent implements OnInit {
     console.log('customer to open', customer);
     const dialogRef = this.dialog.open(CustomerModalComponent, {
       width: '500px',
-      data: customer ? { ...customer } : null  // <-- Les données sont bien passées ici
+      data: customer ? { ...customer } : null
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.loadCustomers(); // Rafraîchir la liste après ajout/modification
+        this.loadCustomers();
       }
     });
   }
 
 
 
-  // Méthode pour éditer un client (ouvre le modal)
+
   editCustomer(customer: Customer): void {
     console.log('customer to edit', customer);
     this.openCustomerModal(customer);
   }
 
-  // Méthode pour supprimer un client
+
   deleteCustomer(id: number): void {
-    // Implémentation de la suppression
+
     this.customerService.deleteCustomer(id).subscribe(() => {
-      this.loadCustomers(); // Rafraîchir la liste après suppression
+      this.loadCustomers();
     });
   }
 
-  // Ferme le modal
+
   closeCustomerModal(): void {
     this.isModalOpen = false;
   }
 
-  // Gère l'enregistrement d'un client depuis le modal
+
   onCustomerSaved(customer: Customer): void {
-    this.loadCustomers(); // Rafraîchir la liste après sauvegarde
+    this.loadCustomers();
   }
 
   subscribeCustomer(customer_id: number) {

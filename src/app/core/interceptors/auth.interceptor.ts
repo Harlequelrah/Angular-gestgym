@@ -15,12 +15,10 @@ export class AuthInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const access_token = localStorage.getItem("access_token");
         const refresh_token = localStorage.getItem("refresh_token");
-        console.log("requete en cours");
         if (req.url.includes('/refresh-token') || req.url.includes('/login')) {
             return next.handle(req);
         }
         else if (access_token != null && this.jwtService.isValidToken(access_token)) {
-            console.log("access token handling request");
             const headers = new HttpHeaders()
                 .append('Content-Type', 'Application/json')
                 .append('Authorization', `Bearer ${access_token}`)
@@ -28,7 +26,6 @@ export class AuthInterceptor implements HttpInterceptor {
             return next.handle(modifReq);
         }
         else if (refresh_token != null && this.jwtService.isValidToken(refresh_token)) {
-            console.log("refresh token handling request");
             const refresh: refreshToken = {
                 refresh_token
             }
@@ -48,7 +45,6 @@ export class AuthInterceptor implements HttpInterceptor {
         }
         else  {
             this.auth.logout();
-            console.log(" handling normal request");
             return EMPTY;
         }
 

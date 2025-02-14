@@ -27,7 +27,6 @@ export class UserService {
   public createUser(user: userForm):
     Observable<User> {
     user.role = "RECEPTIONIST";
-    console.log("hey");
     console.log(user);
     return this.http.post<User>(`${environment.ApiUrl}/register`, user);
   }

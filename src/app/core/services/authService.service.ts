@@ -1,12 +1,13 @@
 import { Injectable } from "@angular/core";
 import { userLogin } from "../types/userLogin.type";
-import { Observable, take, tap } from "rxjs";
+import { catchError, Observable, take, tap } from "rxjs";
 import {  Token } from "../models/token";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../environments/environment";
 import { Router } from "@angular/router";
 import { accessToken } from "../types/accessToken.type";
 import { refreshToken } from "../types/refreshToken.type";
+import { ErrorHandlerService } from "./ErrorHandlerService.service";
 
 @Injectable(
     {
@@ -15,7 +16,10 @@ import { refreshToken } from "../types/refreshToken.type";
 )
 export class AuthService{
 
-    constructor(private http: HttpClient,private router:Router) { }
+    constructor(
+        private http: HttpClient,
+        private router:Router,
+        private errorHandler:ErrorHandlerService) { }
 
 
     login(formValue: userLogin): Observable<Token>{
@@ -28,7 +32,9 @@ export class AuthService{
                         localStorage.setItem("refresh_token", response.refresh_token);
                     }
                 }
-            )
+            ),
+            catchError(err => this.errorHandler.handleError(err,'    Échec de la connexion.Veuillez vérifier vos identifiants et réessayer'))
+
         );
 
     }
@@ -45,7 +51,8 @@ export class AuthService{
                 (response: accessToken) => {
                     localStorage.setItem("access_token", response.access_token)
                 }
-            )
+            ),
+            catchError(err=>this.errorHandler.handleError(err,'Echec de la reconnection automatique.Veuillez vous reconnecter manuellement'))
         );
     }
 

@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent {
   username: string | null = null;
-  constructor(private jwtService: JwtService, private auth: AuthService, private router: Router) {
+  constructor(private jwtService: JwtService, private auth: AuthService) {
         this.username = this.jwtService.getUsername();
   }
 

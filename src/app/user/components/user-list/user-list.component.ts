@@ -13,8 +13,8 @@ import { UserModalComponent } from '../user-modal/user-modal.component';
 })
 export class UserListComponent implements OnInit {
   users$!: Observable<User[]>;
-  selectedUser?: User;  // Pour garder la référence au client sélectionné
-  isModalOpen = false; // Pour gérer l'état de visibilité du modal
+  selectedUser?: User;
+  isModalOpen = false;
 
   constructor(
     private userService: UserService,
@@ -33,39 +33,38 @@ export class UserListComponent implements OnInit {
     console.log('user to open', user);
     const dialogRef = this.dialog.open(UserModalComponent, {
       width: '500px',
-      data: user ? { ...user } : null  // <-- Les données sont bien passées ici
+      data: user ? { ...user } : null
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.loadUsers(); // Rafraîchir la liste après ajout/modification
+        this.loadUsers();
       }
     });
   }
 
 
 
-  // Méthode pour éditer un client (ouvre le modal)
+
   editUser(user: User): void {
-    console.log('user to edit', user);
     this.openUserModal(user);
   }
 
-  // Méthode pour supprimer un client
+
   deleteUser(id: number): void {
-    // Implémentation de la suppression
+
     this.userService.deleteUser(id).subscribe(() => {
-      this.loadUsers(); // Rafraîchir la liste après suppression
+      this.loadUsers();
     });
   }
 
-  // Ferme le modal
+
   closeUserModal(): void {
     this.isModalOpen = false;
   }
 
-  // Gère l'enregistrement d'un client depuis le modal
+
   onUserSaved(user: User): void {
-    this.loadUsers(); // Rafraîchir la liste après sauvegarde
+    this.loadUsers();
   }
 }

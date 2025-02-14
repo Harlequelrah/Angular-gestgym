@@ -10,7 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./customer-modal.component.scss']
 })
 export class CustomerModalComponent implements OnInit {
-  @Output() formSubmitted = new EventEmitter<any>(); // Événement après soumission
+  @Output() formSubmitted = new EventEmitter<any>();
 
   customerForm!: FormGroup;
   isLoading: boolean = false;
@@ -19,11 +19,10 @@ export class CustomerModalComponent implements OnInit {
     private fb: FormBuilder,
     private customerService: CustomerService,
     private dialogRef: MatDialogRef<CustomerModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public customerData: any  // <---- Récupérer les données passées
+    @Inject(MAT_DIALOG_DATA) public customerData: any
   ) { }
 
   ngOnInit(): void {
-    console.log('Données du client dans le modal:', this.customerData); // Vérification dans la console
     this.initializeForm();
   }
 
@@ -42,7 +41,7 @@ export class CustomerModalComponent implements OnInit {
       const formData = this.customerForm.value;
 
       if (this.customerData) {
-        // Mode modification
+
         this.customerService.updateCustomer(this.customerData.id, formData).subscribe(
           () => {
             this.isLoading = false;
@@ -55,7 +54,7 @@ export class CustomerModalComponent implements OnInit {
           }
         );
       } else {
-        // Mode création
+
         this.customerService.createCustomer(formData).subscribe(
           () => {
             this.isLoading = false;

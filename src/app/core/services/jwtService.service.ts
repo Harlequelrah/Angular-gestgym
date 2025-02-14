@@ -14,7 +14,6 @@ export class JwtService {
             const decoded = this.decodeToken(token);
             if (decoded)
             {
-                console.log(decoded);
                 return decoded.sub
             }
         }
@@ -43,7 +42,6 @@ export class JwtService {
             return null;
         }
         catch (error) {
-            console.log("Invalid token", error)
             return null;
         }
     }
