@@ -3,8 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { map, Observable, tap } from 'rxjs';
 import { Suscription } from '../../models/Suscription';
 import { SuscriptionService } from '../../services/suscription.service';
-import { SuscriptionModalComponent } from '../suscription-modal/suscription-modal.component';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-suscription-list',
@@ -14,8 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class SuscriptionListComponent implements OnInit {
 
-  selectedSuscription?: Suscription;
-  isModalOpen = false;
+
   suscriptions$!: Observable<Suscription[]>;
   customer_id: number | null = null;
   pack_id: number | null = null;
@@ -24,7 +21,6 @@ export class SuscriptionListComponent implements OnInit {
   endDate: string = '';
   constructor(
     private suscriptionService: SuscriptionService,
-    private dialog: MatDialog,
     private route: ActivatedRoute
   ) { }
 
@@ -32,26 +28,10 @@ export class SuscriptionListComponent implements OnInit {
     this.prepareScreen();
     this.loadSuscriptions();
   }
-  openSuscriptionModal(suscription?: Suscription): void {
-    const dialogRef = this.dialog.open(SuscriptionModalComponent, {
-      width: '500px',
-      data: suscription ? { ...suscription } : null
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.loadSuscriptions();
-      }
-    });
-  }
 
-  editSuscription(suscription: Suscription): void {
-    this.openSuscriptionModal(suscription);
-  }
 
-  closePackModal(): void {
-    this.isModalOpen = false;
-  }
+
 
 
   getEndDate(suscription: Suscription): string {
@@ -168,9 +148,7 @@ export class SuscriptionListComponent implements OnInit {
   }
 
 
-  onSuscriptionSaved(suscription: Suscription): void {
-    this.loadSuscriptions();
-  }
+
   changeSuscriptionStatus(suscription: Suscription) {
     this.suscriptionService.changeSuscriptionStatus(suscription.id, suscription).subscribe(() => {
       this.loadSuscriptions();
